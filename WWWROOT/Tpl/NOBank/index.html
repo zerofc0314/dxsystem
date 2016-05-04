@@ -1,0 +1,104 @@
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#add').click(function() {
+            show("{:U('NOBank/add')}", '号码增加');
+        });
+        $('#neaten').click(function() {
+            show("{:U('NOBank/neaten')}", '整理');
+        });
+    });
+   
+    function del(id) {
+        asyncbox.confirm('您确定要删除当前信息吗？删除后不可恢复！', '删除确认', function(action) {
+            //confirm 返回三个 action 值，分别是 'ok'、'cancel' 和 'close'。
+            if (action == 'ok') {
+                $.post("{:U('NOBank/del')}", 'id=' + id, function(e) {
+                    if (e == '1') {
+                        asyncbox.tips('删除成功 ! ', 'success');
+                        $('.list[flag=C_' + id + ']').remove();
+                    } else {
+                        asyncbox.tips('删除失败 !', 'error');
+                    }
+                });
+            }
+        }
+        );
+    }
+    function search() {
+        var type = $('#type').val();
+        var url = "{:U('NOBank/index')}";
+        if (type) {
+            url += '&type=' + type;
+        }
+        location.href = url;
+    }
+</script>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="b5d6e6">
+    <tr class="bar">
+        <td colspan="10">
+            <table border="0" align="left" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td width="400">
+                        号码类型：
+                        <select name="type"  id='type'  onchange="selectCid()">
+                            <foreach name="attribute['type']" item='v'>
+                                <option value="{$key}"<?php if($key==$_GET['type']){echo 'selected';} ?>>{$v}</option>
+                            </foreach>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="button" value="筛选" onclick="search()"/>
+                    </td>
+            </table>
+            <table border="0" align="right" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td width="200">
+                        <table width="90%" border="0" cellpadding="0" cellspacing="0">
+                            <tr>
+                                <td style="cursor: hand" id='neaten'>
+                                    <img src="./Tpl/static/images/22.gif" width="14" height="14" />号码整理
+                                </td>
+                                <td id="add" style="cursor: hand">
+                                    <img src="./Tpl/static/images/22.gif" width="14" height="14" />号码增加
+                                </td>
+                            </tr>
+
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="9"></td>
+    </tr>
+    <tr class="bar">
+        <td width="3%">序号</td>
+        <td width="10%">姓名</td>
+        <td width="5%">号码类型</td>
+        <td width="10%">号码</td>
+        <td width="10%">归属地</td>
+        <td width="9%">操作</td>
+    </tr>
+
+    <foreach name='list' item='v'>
+        <tr class="list" flag='C_{$v['id']}'>
+            <td>{$key+1}</td>
+            <td>{$v['name']}</td>
+            <td>{$attribute['type'][$v['type']]}</td>
+            <td>{$v['phone']}</td>
+            <td>{$v['area']}</td>
+            <td >
+                <a href="javascript:;"  onclick="del({$v['id']})">
+                    <img src="./Tpl/static/images/del.gif" width="16" height="16" />删除
+                </a>
+            </td>
+        </tr>
+    </foreach>
+    <tr>
+        <td  colspan="10" class="bar">
+            {$page}
+        </td>
+    </tr>
+</table>

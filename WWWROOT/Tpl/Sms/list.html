@@ -1,0 +1,157 @@
+<script type="text/javascript">
+    function check() {
+        var obj = $('input[flag=check]');
+        if (document.getElementById('checked').checked == true) {
+            for (var i = 0; i < obj.length; i++) {
+                obj[i].checked = true;
+            }
+        } else {
+            for (var i = 0; i < obj.length; i++) {
+                obj[i].checked = false;
+            }
+        }
+    }
+
+    function del() {
+        var obj = $('input[flag=check]');
+        var id = new Array();
+        for (var i = 0; i < obj.length; i++) {
+            if (obj[i].checked == true) {
+                id.push(obj[i].value);
+            }
+        }
+        if (id.length < 1) {
+            alert('未选择任何消息');
+            return;
+        }
+        asyncbox.confirm('您确定要删除当前信息吗？删除后不可恢复！', '删除确认', function(action) {
+            //confirm 返回三个 action 值，分别是 'ok'、'cancel' 和 'close'。
+            if (action == 'ok') {
+                $.post("{:U('Sms/del')}", 'id=' + id, function(e) {
+                    if (e == '1') {
+                        asyncbox.tips('删除成功 ! ', 'success');
+                        for (var i = 0; i < obj.length; i++) {
+                            if (obj[i].checked == true) {
+                                $('.list[flag=C_' + obj[i].value + ']').remove();
+                            }
+                        }
+
+                    } else {
+                        asyncbox.tips('删除失败 !', 'error');
+                    }
+                });
+            }
+
+        }
+        );
+    }
+    function send() {
+        var obj = $('input[flag=check]');
+        var id = new Array();
+        for (var i = 0; i < obj.length; i++) {
+            if (obj[i].checked == true) {
+                id.push(obj[i].value);
+            }
+        }
+        if (id.length < 1) {
+            alert('未选择任何消息');
+            return;
+        }
+        asyncbox.confirm('您确定要重发当前选择的信息吗?', '重发确认', function(action) {
+            //confirm 返回三个 action 值，分别是 'ok'、'cancel' 和 'close'。
+            if (action == 'ok') {
+                $.post("{:U('Sms/send')}", 'id=' + id, function(e) {
+                    if (e == '1') {
+                        asyncbox.tips('重发成功 ! ', 'success');
+                        for (var i = 0; i < obj.length; i++) {
+                            if (obj[i].checked == true) {
+                                $('td[flag=S_' + obj[i].value + ']').html('队列中');
+                            }
+                        }
+
+                    } else {
+                        asyncbox.tips('重发失败 !', 'error');
+                    }
+                });
+            }
+
+        }
+        );
+    }
+</script>
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="b5d6e6">
+    <tr class="bar">
+        <td colspan="10">
+            <table border="0" align="right" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td width="100">
+                        <table width="90%" border="0" cellpadding="0" cellspacing="0">
+                            <tr>
+                                <td id="del" style="cursor: hand" onclick='del()' title='删除选中的信息'>
+                                    <img src="./Tpl/static/images/del.gif" width="16" height="16" />删除
+                                </td>
+                                <td id="del" style="cursor: hand" onclick='send()' title='重发选中的信息'>
+                                    <img src="./Tpl/static/images/22.gif" width="14" height="14" />重发
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="10"></td>
+    </tr>
+
+    <tr class="bar">
+        <td width="3%">
+            <input type="checkbox" id='checked' onclick='check()'>
+        </td>
+        <td width="3%">序号</td>
+        <td width="6%">发送人</td>
+        <td width="6%">接受号</td>
+        <td width="5%">消息类型</td>
+        <td width="6%">接受人群</td>
+        <td >消息内容</td>
+        <td width="14%">签名</td>
+        <td width="6%">状态</td>
+        <td width="6%">时间</td>
+    </tr>
+
+    <?php 
+    foreach ($list as $key =>$v){
+    ?>
+    <tr class="list" flag='C_{$v['id']}'>
+        <td>
+            <input type="checkbox" name="id[]" value="{$v['id']}" flag='check'>
+        </td>
+        <td>{$key}</td>
+        <td>{$v['pno']}</td>
+        <td>{$v['phone']}</td>
+        <td>{$attribute['type'][$v['type']]}</td>
+        <td>{$attribute['ptype'][$v['ptype']]}</td>
+        <td>{$v['content']}</td>
+        <td>{$v['sign']}</td>
+        <td flag="S_{$v['id']}">
+            <?php 
+            if($v['status'] == 0){
+            echo $attribute['status'][$v['status']];
+            }elseif($v['status'] == 1){
+            echo '<font color=green>'.$attribute['status'][$v['status']].'</font>';
+            }else{
+            echo '<font color=red>'.$attribute['status'][$v['status']].'</font>';
+            }
+            ?>
+        </td>
+        <td><?php echo date('Y-m-d',$v['date']); ?></td>
+    </tr>
+    <?php } ?>
+    <tr>
+        <td  colspan="10" class="bar">
+            {$page}
+        </td>
+    </tr>
+</table>

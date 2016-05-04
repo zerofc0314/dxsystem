@@ -1,0 +1,20 @@
+<import type='css' file="css.index"  basepath="./Tpl/static" />
+<div style='clear: both;font-size: 50px; line-height: 80px; margin-top: 80px;'>
+    欢迎进入德兴市公安局网上绩效考核系统
+</div>
+<?php
+if($data[0]){
+?>
+<div class="msg">
+    <div><font size='5'><b>提示</b></font></div>
+    <div> 您有新信息，请注意查看 <a href='{:U('Notice/index')}'>【查看】</a></div>
+</div>
+<?php 
+}
+elseif($data[1]){
+?>
+<div class="msg">
+    <div><font size='5'><b>提示</b></font></div>
+    <div> 您有新申诉信息，请注意查看 <a href='{:U('Msg/index')}'>【查看】</a></div>
+</div>
+<?php } ?>

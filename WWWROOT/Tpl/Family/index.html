@@ -1,0 +1,139 @@
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#add').click(function() {
+            show("{:U('Family/add')}", '增加家庭（房屋）');
+        });
+    });
+    function edit(id) {
+        var url = "{:U('Family/edit?id')}" + id;
+        show(url, '编辑家庭（房屋）');
+    }
+    function del(id) {
+        asyncbox.confirm('您确定要删除当前信息吗？删除后不可恢复！', '删除确认', function(action) {
+            //confirm 返回三个 action 值，分别是 'ok'、'cancel' 和 'close'。
+            if (action == 'ok') {
+                $.post("{:U('Family/del')}", 'id=' + id, function(e) {
+                    if (e == '1') {
+                        asyncbox.tips('删除成功 ! ', 'success');
+                        $('.list[flag=C_' + id + ']').remove();
+                    } else {
+                        asyncbox.tips('删除失败 !', 'error');
+                    }
+                });
+            }
+        }
+        );
+    }
+    function search() {
+
+    }
+</script>
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="b5d6e6">
+    <tr class="bar">
+        <td colspan="10">
+            <table border="0" align="left" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td width="200">
+                        部门：
+                        <select name="cid"  id='cid'  onchange="selectCid()">
+                            <foreach name='class' item='v'>
+                                <option value="{$key}">{$v}</option>
+                            </foreach>
+                        </select>
+                    </td>
+                    <td width="200">
+                        警员：
+                        <select name="pno" id='pno'>
+                            <option value="全部">全部</option>
+                        </select>
+                    </td>
+                    <td width="200">
+                        类型：
+                        <select name="type">
+                            <foreach name="attribute['type']" item='v1'>
+                                <option value="{$key}">{$v1}</option>
+                            </foreach>
+                        </select>
+                    </td>
+                    <td width="200">
+                        用途
+                        <select name="use">
+                            <foreach name="attribute['use']" item='v2'>
+                                <option value="{$key}">{$v2}</option>
+                            </foreach>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="800" colspan='5' style="text-align: left"> 
+                        &nbsp;地址：&nbsp;&nbsp;<input type="text" name='address' size='40'>
+                        <font color='red'>&nbsp;&nbsp;支持模糊查询</font>
+                    </td>
+                    <td>
+                        <button onclick='search()'>筛选</button>
+                    </td>
+                </tr>
+            </table>
+            <table border="0" align="right" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td width="60">
+                        <table width="90%" border="0" cellpadding="0" cellspacing="0">
+                            <tr>
+                                <td id="add" style="cursor: hand">
+                                    <img src="./Tpl/static/images/22.gif" width="14" height="14" />新增
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="9"></td>
+    </tr>
+    <tr class="bar">
+
+        <td width="3%">序号</td>
+        <td width="10%">房屋编号</td>
+        <td width="5%">类型</td>
+        <td width="10%">用途</td>
+        <td width="10%">电话</td>
+        <td width="6%">负责人</td>
+        <td width="10%">负责人电话</td>
+        <td width="6%">录入警员</td>
+        <td>地址</td>
+        <td width="9%">操作</td>
+    </tr>
+    <?php $i = 1; ?>
+    <foreach name="list" item="v">
+        <?php $i++; ?>
+        <tr class="list" flag='C_{$v['id']}'>
+            <td>{$i}</td>
+            <td>{$v['no']}</td>
+            <td>{$attribute['type'][$v['type']]}</td>
+            <td>{$attribute['use'][$v['use']]}</td>
+            <td>{$v['phone']}</td>
+            <td>{$v['link_name']}</td>
+            <td>{$v['link_phone']}</td>
+            <td>{$v['pname']}</td>
+            <td>{$v['address']}</td>
+            <td >
+                <a href="javascript:;"  onclick="edit({$v['id']})">
+                    <img src="./Tpl/static/images/edt.gif" width="16" height="16" />编辑
+                </a>
+                &nbsp; &nbsp;
+                <a href="javascript:;"  onclick="del({$v['id']})">
+                    <img src="./Tpl/static/images/del.gif" width="16" height="16" />删除
+                </a>
+            </td>
+        </tr>
+    </foreach>
+    <tr>
+        <td  colspan="10" class="bar">
+            {$page}
+        </td>
+    </tr>
+</table>

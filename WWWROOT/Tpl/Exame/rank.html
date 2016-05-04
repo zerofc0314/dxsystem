@@ -1,0 +1,79 @@
+<script language="javascript">
+    function chack() {
+        if (document.getElementById("year").value == "") {
+            alert("请填写您要查询的年份!");
+        }
+        else {
+            document.post.submit();
+        }
+    }
+</script>
+<form method="post" id="post" name="post">
+    <table width="655" border="0" align="center" cellpadding="0" cellspacing="0" id="table1">
+        <tr>
+            <td>
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" id="table2">
+                    <tr>
+                        <td width="52"><img src="./Tpl/static/images/main_1.jpg" width="52" height="55" /></td>
+                        <td background="./Tpl/static/images/main_2.jpg" class="title1" width="100%">筛选条件</td>
+                        <td width="52"><img src="./Tpl/static/images/main_3.jpg" width="52" height="55" /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td>
+
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" id="table3">
+                    <tr>
+                        <td width="15" background="./Tpl/static/images/main_4.gif">　</td>
+                        <td background="./Tpl/static/images/main_9.gif"><span class="right_body">
+                            </span>
+                            <table width="99%" border="0" cellpadding="0" cellspacing="1" class="table" id="table4"><tr>
+                                    <th width="106" class="td2">年份</th>
+                                    <th class="td2" width="113">季度</th>
+                                    <th class="td2" width="300">类别</th>
+                                    <th class="td2">　</th>
+                                </tr>
+
+                                <tr>
+                                    <td class="td" align="center">
+                                        <input type="text" name="year" id="year" size="10" /></td>
+                                    <td class="td" width="113" align="center">
+                                        <select name="quarter" class="td" id="quarter">
+                                            <option value="0">年</option>
+                                            <option value="1">第一季度</option>
+                                            <option value="2">第二季度</option>
+                                            <option value="3">第三季度</option>
+                                            <option value="4">第四季度</option>
+                                        </select>
+                                    </td>
+                                    <td class="td" width="300" align="center">
+                                        <input type="radio" value="1" name="sid">科室类
+                                        <input type="radio" value="2" name="sid">大队类
+                                        <input type="radio" value="3" name="sid">派出所
+                                    </td>
+                                    <td class="td" align="center">
+                                        <input name="按钮" type="button" class="button" onclick="chack()" value="查看" />
+                                    </td>
+                                </tr>
+                            </table>
+                            <span class="right_body"></span>
+                        </td>
+                        <td width="15" background="./Tpl/static/images/main_5.gif">　</td>
+                    </tr>
+                </table>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" id="table5">
+                    <tr>
+                        <td width="52"><img src="./Tpl/static/images/main_6.gif" width="52" height="16" /></td>
+                        <td background="./Tpl/static/images/main_7.gif" width="100%"></td>
+                        <td width="75"><img src="./Tpl/static/images/main_8.gif" width="52" height="16" /></td>
+                    </tr>
+                </table></td>
+        </tr>
+    </table>
+</form>

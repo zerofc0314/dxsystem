@@ -1,0 +1,78 @@
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+    <tr>
+        <td>
+            <table width="102%" border="0" cellspacing="0" cellpadding="0">
+                <tr><td width="52">
+                        <img src="./Tpl/static/images/main_1.jpg" width="52" height="55" />
+                    </td>
+                    <td background="./Tpl/static/images/main_2.jpg" class="title1">信息查看</td>
+                    <td width="52">
+                        <img src="./Tpl/static/images/main_3.jpg" width="52" height="55" />
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table width="102%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td width="15" background="./Tpl/static/images/main_4.gif">　
+                    </td><td background="./Tpl/static/images/main_9.gif">
+                        <span class="right_body"></span>
+                        <table width="99%" border="0" cellpadding="0" cellspacing="1" class="table">
+                            <tr>
+                                <th class="td2" colspan="2">通知信息查看</th>
+                            </tr>
+                            <tr>
+                                <td class="td" align="center" width="25%">发送单位</td>
+                                <td class="td" align="center" width="73%">{$class[$data['s_cid']]['name']}</td>
+                            </tr>
+                            <td class="td" align="center" width="25%">接受单位</td>
+                            <td class="td" align="center" width="73%">{$class[$data['cid']]['name']}</td>
+                </tr>
+                <tr>
+                    <td class="td" align="center" width="25%">消息类型</td>
+                    <td class="td" align="center" width="73%">
+                      <?php echo (1 == $data['type'] ? '<font color=red>公告</font>':'普通消息'); ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td" align="center" width="25%">标题</td>
+                    <td class="td" align="center" width="73%">
+                       {$data['title']}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td" align="center" width="25%">内容：</td>
+                    <td class="td" align="center" width="73%" style="height: auto; overflow: scroll">
+                       {$data['content']}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td" align="center" width="25%">发送时间：</td>
+                    <td class="td" align="center" width="73%">
+                     <?php echo date('Y-m-d H:i:s',$data['date']); ?>
+                    </td>
+                </tr>
+            </table>
+            <span class="right_body"></span>
+        </td>
+        <td width="15" background="./Tpl/static/images/main_5.gif">　</td>
+    </tr>
+</table>
+</td>
+</tr>
+<tr>
+    <td>
+        <table width="102%" border="0" cellspacing="0" cellpadding="0">
+            <tr><td width="52">
+                    <img src="./Tpl/static/images/main_6.gif" width="52" height="16" />
+                </td>
+                <td background="./Tpl/static/images/main_7.gif" width="80%"></td>
+                <td width="59"><img src="./Tpl/static/images/main_8.gif" width="59" height="16" /></td>
+            </tr>
+        </table>
+    </td>
+</tr>
+</table>

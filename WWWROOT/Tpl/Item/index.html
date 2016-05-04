@@ -1,0 +1,57 @@
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#add').click(function() {
+            show("{:U('Item/add')}", '增加考核项目');
+        });
+    });
+    function edit(id) {
+        var url = '{:U('Item/edit?id')}' + id;
+                show(url, '修改部门');
+    }
+    function del(id) {
+        asyncbox.confirm('您确定要删除当前信息吗？删除后不可恢复！', '删除确认', function(action) {
+            //confirm 返回三个 action 值，分别是 'ok'、'cancel' 和 'close'。
+            if (action == 'ok') {
+                $.post('{:U('Item/del')}', 'id=' + id, function(e) {
+                    if (e == '1') {
+                        asyncbox.tips('删除成功 ! ', 'success');
+                        $('.a1[flag=C_'+id+']').remove();   
+                    } else {
+                        asyncbox.tips('删除失败 !', 'error');
+                    }
+                });
+            }
+        }
+        );
+    }
+</script>
+<table width="90%" id="table"  border="1" class="t1">
+    <thead>
+        <th width="30%">主考部门</th>
+        <th width="20%">考核科目</th>
+        <th width="20%">分值</th>
+        <th width="30%">操作</th>
+    </thead>
+    <?php if($data){ ?>
+<foreach name="data" item="value">
+    <tr class="a1" flag="C_{$value['id']}">
+        <td>{$value['class_name']}</td>
+        <td>{$value['item']}</td>
+        <td>{$value['point']}</td>
+        <td>
+            <input type="button" onclick="edit({$value['id']})" value="修改"/>
+            <input type="button" onclick="del({$value['id']})" value="删除"/>
+        </td>
+    </tr>
+    </foreach>
+    <?php  }else{ ?>
+    <tr>
+        <td colspan="4">没有任何信息，请添加</td>
+    </tr> 
+    <?php }?>
+    <tr>
+        <td colspan="4">
+            <input type="button" value='增加' id ='add'>
+        </td>
+    </tr>
+</table>

@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+            <import file="js.jquery"  basepath="./Tpl/static" />
+            <import file="js.DatePicker.WdatePicker"  basepath="./Tpl/static" />
+            <import file="js.selectBox"  basepath="./Tpl/static" />
+            <import type='css' file="css.selectBox"  basepath="./Tpl/static" />
+            <style type="text/css">
+                <!--
+                body {
+                    margin-left: 0px;
+                    margin-top: 0px;
+                    margin-right: 0px;
+                    margin-bottom: 0px;
+                    font-size: 12px;
+                }
+                .bar td{
+                    background-image: url(./Tpl/static/images/bg.gif);
+                    background-repeat: repeat-x;
+                    background-color: #FFFFFF;
+                    height: 22px;
+                    text-align: center;
+                }
+                .list {
+                    background-color: #FFFFFF;
+                    text-align: center;
+                }
+                label{
+                    color: red;
+                    margin-left: 10px;
+                }
+                -->
+            </style>
+            <script type=text/javascript>
+                $(document).ready( function() {
+                    $("select").selectBox();
+                });
+            </script>
+    </head>
+    <body>
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <td>
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td width="8" background="./Tpl/static/images/tab_12.gif">&nbsp;</td>
+                            <td>
+                                {__CONTENT__}
+                            </td>
+                            <td width="8" background="./Tpl/static/images/tab_15.gif">&nbsp;</td>
+                        </tr>
+                    </table></td>
+            </tr>
+        </table>
+    </body>
+</html>

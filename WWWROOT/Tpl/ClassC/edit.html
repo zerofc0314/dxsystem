@@ -1,0 +1,27 @@
+
+
+<form method="POST">
+    <table width="90%" id="table"  border="1" class="t1">
+        <thead>
+        <th colspan="2" >修改部门</th>
+        </thead>
+        <thead>
+        <th >所属列别</th>
+        <th >单位名称</th>
+        </thead>
+        <tr>
+            <td>
+                <select name='unit'>
+                    <foreach name='sort' item='value'>
+                        <option value="{$value['sid']}">{$value['name']}</option>
+                    </foreach> 
+                </select>
+            </td>
+            <?php $id=$_GET['id']; ?>
+            <td><input type="text" name='name' value='{$data[$id]['name']}'></td>
+        </tr>
+        <tr>
+            <td colspan="2"><input type='submit' value='修改' /></td>
+        </tr>
+    </table>
+</form>

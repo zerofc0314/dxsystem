@@ -1,0 +1,52 @@
+<form method="post" id="form">
+    <table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="b5d6e6">
+        <tr class="bar">
+            <td colspan="4" >
+                消息群发
+                <div id='htm'></div>
+            </td>
+        </tr>
+        <tr class="list">
+            <td width='20%'>类型：</td>
+            <td ALIGN="left"> 
+                <select name='type' class="select">
+                    <option value="0">通知消息</option>
+                    <option value="1">普通消息</option>
+                </select>
+            </td>
+            <td width="20%">人员类型：</td>
+            <td ALIGN="left">
+                自定义号码
+            </td>
+        </tr>
+        <tr class="list">
+            <td>号码：</td>
+            <td ALIGN="left" colspan="3">
+               <?php echo $_GET['phone'] ?>
+            </td>
+        </tr>
+        <tr class="list">
+            <td>内容：</td>
+           <td ALIGN="left"  colspan="3">
+                <textarea name="content" id="content" style="width: 300px; height: 100px" ></textarea>
+            </td>
+        </tr>
+        <tr class="list">
+            <td>签名：</td>
+            <td ALIGN="left"  colspan="3" >
+                <input type="sign"  size="40" name="sign">
+            </td>
+        </tr>
+        <tr class="list">
+            <td>注意：</td>
+            <td ALIGN="left"  colspan="3"  style="color:red">
+                1.请勿发送铭感词汇,2.短信内容+签名内容建议不超过70个字符.超出字符则按照两条短信进行计费.3.系统将自动过滤重复号码!
+            </td>
+        </tr>
+        <tr class="bar">
+            <td colspan="4" >
+                <input type="button" value="发送" onclick="formSub()"/>
+            </td>
+        </tr>
+    </table>
+</form>

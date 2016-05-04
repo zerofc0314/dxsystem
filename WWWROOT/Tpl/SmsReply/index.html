@@ -1,0 +1,156 @@
+<script type="text/javascript">
+    function check() {
+        var obj = $('input[flag=check]');
+        if (document.getElementById('checked').checked == true) {
+            for (var i = 0; i < obj.length; i++) {
+                obj[i].checked = true;
+            }
+        } else {
+            for (var i = 0; i < obj.length; i++) {
+                obj[i].checked = false;
+            }
+        }
+    }
+
+    function del() {
+        var obj = $('input[flag=check]');
+        var id = new Array();
+        for (var i = 0; i < obj.length; i++) {
+            if (obj[i].checked == true) {
+                id.push(obj[i].value);
+            }
+        }
+        if (id.length < 1) {
+            alert('未选择任何消息');
+            return;
+        }
+        asyncbox.confirm('您确定要删除当前信息吗？删除后不可恢复！', '删除确认', function(action) {
+            //confirm 返回三个 action 值，分别是 'ok'、'cancel' 和 'close'。
+            if (action == 'ok') {
+                $.post("{:U('SmsReply/del')}", 'id=' + id, function(e) {
+                    if (e == '1') {
+                        asyncbox.tips('删除成功 ! ', 'success');
+                        for (var i = 0; i < obj.length; i++) {
+                            if (obj[i].checked == true) {
+                                $('.list[flag=C_' + obj[i].value + ']').remove();
+                            }
+                        }
+
+                    } else {
+                        asyncbox.tips('删除失败,可能您不具有删除当前信息的权限 !', 'error');
+                    }
+                });
+            }
+
+        }
+        );
+    }
+    function search() {
+        var pno = $('#pno').val();
+        var indate_1 = $('#intdate_1').val();
+        var indate_2 = $('#intdate_2').val();
+        var status = $("#type").val();
+        var url = "{:U('SmsReply/index')}";
+        if(pno.length>5){
+              url +=  '&pno=' + pno;
+        }
+       
+        if (indate_1) {
+            url += '&indate_1=' + indate_1;
+        }
+        if (indate_2) {
+            url += '&indate_2=' + indate_2;
+        }
+        url += '&type=' + status;
+        if (indate_1 && indate_2) {
+            var beginDate = new Date(indate_1.replace(/-/g, "/"));
+            var endDate = new Date(indate_2.replace(/-/g, "/"));
+            if (beginDate >= endDate) {
+                alert("结束时间必须大于开始时间！");
+                return false;
+            }
+        }
+        location.href = url;
+    }
+</script>
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="b5d6e6">
+    <tr class="bar">
+        <td colspan="9">
+            <table border="0" align="left" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td width="60">警号：</td>
+                    <td width="150">
+                        <input type="text" name="pno" id="pno" value='<?php echo $_GET['pno'] ?>'/>
+                    </td>
+                    <td width="60">接受时间：</td>
+                    <td width="220">
+                        <input type="text" id="intdate_1" name='intdate_1' size='10' class="Wdate" onClick="WdatePicker()" value="<?php echo $_GET['indate_1'] ?>"> 至 
+                        <input type='text' id="intdate_2" name='intdate_2' class="Wdate" size='10' onClick="WdatePicker()" value="<?php echo $_GET['indate_2'] ?>">
+                    </td>
+                    <td width="60">短信类型：</td> 
+                    <td width="150"><select name='type' id="type">
+                            <foreach name="type" item="V1">
+                                <option value="{$key}" <?php if($_GET['type'] == $key){ echo 'selected';} ?>>{$V1}</option>
+                            </foreach>
+                        </select></td> 
+                    <td width="60"><button onclick='search()'>筛选</button></td>
+                </tr>
+            </table>
+            <table border="0" align="right" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td width="100">
+                        <table width="90%" border="0" cellpadding="0" cellspacing="0">
+                            <tr>
+                                <td id="del" style="cursor: hand" onclick='del()' title='删除选中的信息'>
+                                    <img src="./Tpl/static/images/del.gif" width="16" height="16" />删除
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="9"></td>
+    </tr>
+
+    <tr class="bar">
+        <td width="3%">
+            <input type="checkbox" id='checked' onclick='check()'>
+        </td>
+        <td width="3%">序号</td>
+        <td width="6%">发送号码</td>
+        <td width="5%">短信类型</td>
+        <td width="6%">相关警号</td>
+        <td width="5%">相关分值</td>
+        <td >短信内容</td>
+        <td >完整内容</td>
+        <td width="6%">时间</td>
+    </tr>
+
+    <?php 
+    foreach ($list as $key =>$v){
+    ?>
+    <tr class="list" flag='C_{$v['id']}'>
+        <td>
+            <input type="checkbox" name="id[]" value="{$v['id']}" flag='check'>
+        </td>
+        <td>{$key+1}</td>
+        <td>{$v['phone']}</td>
+        <td>{$type[$v['type']]}</td>
+        <td>{$v['pno']}</td>
+        <td>{$v['point']}</td>
+        <td>{$v['content']}</td>
+        <td>{$v['text']}</td>
+        <td><?php echo date('Y-m-d',$v['date']); ?></td>
+    </tr>
+    <?php } ?>
+    <tr>
+        <td  colspan="9" class="bar">
+            {$page}
+        </td>
+    </tr>
+</table>

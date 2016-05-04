@@ -1,0 +1,29 @@
+<form method="POST">
+    <table width="90%" id="table"  border="1" class="t1">
+        <thead>
+        <th colspan="2" >增加考核项目</th>
+        </thead>
+        <tr>
+            <td>所属单位：</td>
+            <td>
+                <select name='cid'>
+                    <foreach name='class' item='v2'>
+                        <option value="{$v2['id']}">{$v2['name']}</option>
+                    </foreach>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>考核科目：</td>
+            <td><input type="text" name='item'></td>
+        </tr>
+        <tr>
+            <td>分值：</td>
+            <td><input type="text" name='point'></td>
+        </tr>
+
+        <tr>
+            <td colspan="2"><input type='submit' value='增加' /></td>
+        </tr>
+    </table>
+</form>

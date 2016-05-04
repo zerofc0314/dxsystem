@@ -1,0 +1,57 @@
+<table width="600" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="52"><img src="./Tpl/static/images/main_1.jpg" width="52" height="55" /></td>
+        <td background="./Tpl/static/images/main_2.jpg" class="title1">用户登录信息
+            <font size='1'>(登录记录只保存60天)</font>
+        </td>
+        <td width="52"><img src="./Tpl/static/images/main_3.jpg" width="52" height="55" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="15" background="./Tpl/static/images/main_4.gif">　</td>
+        <td background="./Tpl/static/images/main_9.gif"><span class="right_body">
+         
+        </span>
+          <table width="99%" border="0" cellpadding="0" cellspacing="1" class="table">
+            <tr>
+              <th class="td2" style="width: 23%">用户</th>
+              <th class="td2" style="width: 27%">登录时间</th>
+              <th class="td2" style="width: 23%">部门</th>
+              <th class="td2" style="width: 23%">ip地址</th>
+            </tr>
+            <foreach name="list" item="value">
+              <tr>
+                <td class="td" align="center" style="width: 23%">{$value['user_name']}</td>
+                <td class="td" align="center" style="width: 27%"><?php echo date('Y-m-d H:i:s',$value['date']) ;?></td>
+                <td class="td" align="center" style="width: 27%"><?php echo $value['cid'] ? $class[$value['cid']]['name'] : '管理员'; ?></td>
+                <td class="td" align="center" style="width: 23%">{$value['ip']}</td>
+              </tr>
+            </foreach>
+             <tr>
+                <td class="td" align="center" colspan="4">
+                        {$page}
+		</td>
+              </tr>
+          </table>
+          <span class="right_body">
+          </span></td>
+        <td width="15" background="./Tpl/static/images/main_5.gif">　</td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table border="0" cellspacing="0" cellpadding="0" style="width: 600">
+      <tr>
+        <td width="52"><img src="./Tpl/static/images/main_6.gif" width="61" height="16" /></td>
+        <td background="./Tpl/static/images/main_7.gif" width="80%"></td>
+        <td width="59">
+		<img src="./Tpl/static/images/main_8.gif" width="59" height="16" /></td>
+      </tr>
+    </table></td>
+  </tr>
+</table> 

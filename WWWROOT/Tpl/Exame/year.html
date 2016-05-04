@@ -1,0 +1,66 @@
+<?php 
+$year = $_POST['year'];
+?>
+<table width="700" border="0" align="center" cellpadding="0" cellspacing="0">
+    <tr>
+        <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td width="52"><img src="./Tpl/static/images/main_1.jpg" width="52" height="55" /></td>
+                    <td background="./Tpl/static/images/main_2.jpg" class="title1">排名查看</td>
+                    <td width="52"><img src="./Tpl/static/images/main_3.jpg" width="52" height="55" /></td>
+                </tr>
+            </table></td>
+    </tr>
+    <tr>
+        <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td width="15" background="./Tpl/static/images/main_4.gif">　</td>
+                    <td background="./Tpl/static/images/main_9.gif"><span class="right_body">
+                        </span>
+                        <table width="99%" border="0" cellpadding="0" cellspacing="1" class="table">
+                            <tr>
+                                <th width="9%" class="td2">排名</th>
+                                <!--<th class="td2" width="16%">档次</th>-->
+                                <th class="td2" width="24%">单位名称</th>
+                                <th class="td2" width="13%">得分</th>
+                                <th class="td2" width="17%">时间</th>
+                                <th class="td2" width="17%">详情</th>
+                            </tr>
+                            <?php $i = 0 ; ?>
+                            <foreach name='data' item='value'>
+                             <?php $i ++; ?>   
+                            <tr>
+                                <td class='td' align='center'>{$i}</td>
+                                <!--<td class='td' width='11%' align='center'>{$value['level']}</td>-->
+                                <td class='td' width='21%' align='center'>{$class[$value['cid']]['name']}</td> 
+                                <td class='td' width='22%' align='center'>
+                                    <font color='#FF0000'>{$value['sum_point']}</font>
+                                </td>
+                                <td class='td' width='32%' align='center'>{$year}年</td>
+                                <td class='td' width='10%' align='center'>
+                                    <input type='button' class='button' value='查看详情'>
+                                </td>
+                            </tr>
+                            </foreach>
+                            <tr>
+                                <td class="td" align="center" colspan="5">
+                                    <input type="button" class="button" value="返回" onclick="javascript:history.go(-1);">
+                                </td>
+                            </tr>
+                        </table>
+                        <span class="right_body">
+                        </span></td>
+                    <td width="15" background="./Tpl/static/images/main_5.gif">　</td>
+                </tr>
+            </table></td>
+    </tr>
+    <tr>
+        <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td width="52"><img src="./Tpl/static/images/main_6.gif" width="52" height="16" /></td>
+                    <td background="./Tpl/static/images/main_7.gif" width="100%"></td>
+                    <td width="52"><img src="./Tpl/static/images/main_8.gif" width="52" height="16" /></td>
+                </tr>
+            </table></td>
+    </tr>
+</table>

@@ -1,0 +1,548 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>{$Think.TITLE}-{$Think.A_VERSION}</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <import type='css' file="css.admin"  basepath="./Tpl/static" />
+    <import file="js.jquery"  basepath="./Tpl/static" />
+    <link rel="shortcut icon" href="./Tpl/static/ICO.ico" />
+    <script language="javascript">
+        function close_window() {
+            if (window.confirm("您确认要离开系统吗???")) {
+                parent.window.location.href = '{:U('Index/index')}';
+            }
+        }
+
+        function MM_preloadImages() { //v3.0
+            var d = document;
+            if (d.images) {
+                if (!d.MM_p)
+                    d.MM_p = new Array();
+                var i, j = d.MM_p.length, a = MM_preloadImages.arguments;
+                for (i = 0; i < a.length; i++)
+                    if (a[i].indexOf("#") != 0) {
+                        d.MM_p[j] = new Image;
+                        d.MM_p[j++].src = a[i];
+                    }
+            }
+        }
+
+    </script>
+    <style type="text/css">
+        <!--
+        #menu_main {
+            FONT-SIZE: 12px;
+            FONT-FAMILY:  "宋体";
+            background-color: #F5FAFE;
+            margin-left: 0px;
+            margin-top: 10px;
+            margin-right: 0px;
+            margin-bottom: 0px;
+            scrollbar-face-color: #F5FAFE;
+            scrollbar-highlight-color: #FFFFFF;
+            scrollbar-shadow-color: #cccccc;
+            scrollbar-3dlight-color: #dbeedd;
+            scrollbar-arrow-color: #cccccc;
+            scrollbar-track-color: #F5FAFE;
+            scrollbar-darkshadow-color: #f3faf4;
+        }
+        .menutitle {
+            color: #FFFFFF;
+            filter: Glow(Color=#0275B9, Strength=1);
+            letter-spacing: 8px;
+            font-size: 12px;
+            padding-top: 4px;
+        }
+        .menubg {
+            border: 1px solid #82ADCA;
+            background-color: #F2F8FD;
+        }
+        .menubg1 {
+            background-color: #F2F8FD;
+            font-size: 12px;
+            color: #001B51;
+            height: 20px;
+            text-align: center;
+            padding-top: 3px;
+            letter-spacing: 2px;
+        }
+        .menubg2 {
+            font-size: 12px;
+            color: #004FA6;
+            text-align: center;
+            height: 20px;
+            background-image: url(./Tpl/static/images/menu_bg.gif);
+            background-repeat: no-repeat;
+            background-position: center;
+            padding-top: 3px;
+            letter-spacing: 2px;
+        }
+        a{behavior:url(./Tpl/static/images/link.htc)}
+        a:link {font-size:12px; color: #001B51;text-decoration: none;}
+        a:visited {font-size:12px; color: #001B51;text-decoration: none;}
+        a:hover {font-size:12px; color: #004FA6;text-decoration: none;}
+        .title {cursor:pointer;}
+        -->
+    </style>
+	<script type="text/javascript">
+		$(document).ready(function(e) {
+            $('.arrow').click(function(){
+				var title = $(this).parents('.title');
+					if($(this).attr('src') == './Tpl/static/images/menu_title3a.jpg'){
+						$(this).attr('src','./Tpl/static/images/menu_title3b.jpg');
+						title.next('.content').slideDown(1000);
+					}else{
+						$(this).attr('src','./Tpl/static/images/menu_title3a.jpg');
+						title.next('.content').slideUp(1000);
+					}
+				});
+			var arrow = $('.arrow:first');
+				arrow.attr('src','./Tpl/static/images/menu_title3b.jpg');
+				arrow.parents('.title').next('.content').slideDown(1000);
+        });
+    
+    </script>
+</head>
+<body >
+    <div id="top">
+        <div id="logo">
+            <img src="./Tpl/static/images/top_banner.jpg" height="112">
+        </div>
+        <div id="top_bar">
+            <table style="width: 100%; height: 31px">
+                <tr> <?php 
+                       $model = new RabcAction();
+                     $time = session('exame');
+                ?>
+                    <td style="width: 195px">
+                        　<font face='微软雅黑' color='#ffffff'>当前登录:<?php $user=session('rabc');echo  $user['name']; ?></font>
+                    </td>
+                    <td >
+                        　<font face='微软雅黑' >
+                             <?php if($time): ?>
+                        <span >公告</span>:
+                <marquee direction="left" scrollamount="3" style="width: 90%;color: red">当前考核时间:{$time['year']}年第{$time['quarter']}季度</marquee>
+                    <?php endif;?>
+                         </font>        
+                </td>
+                <td  style="width: 100px">
+                    <input type="image" src="./Tpl/static/images/topbar_3.jpg" width="94" align="middle" onClick="close_window()" /> 
+                </td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+    <div id="body">
+        <div id="menu">
+            <div id="menu_main"  >
+                <?php if(isset($user['id'])): 
+                $class = $model->getUnit();
+                if($class && $model->user['is_unit'] == 0):
+                ?>
+                <div class="title">
+                    <table width="188" border="0" align="center" cellpadding="0" cellspacing="0">
+                        <tbody><tr>
+                                <td colspan="3"><img src="./Tpl/static/images/menu_1.gif" width="188" height="14"></td>
+                            </tr>
+                            <tr>
+                                <td width="39"><img src="./Tpl/static/images/menu_title1.jpg" width="39" height="26"></td>
+                                <td width="113" background="./Tpl/static/images/menu_title2.jpg"><table width="113" height="26" border="0" cellpadding="0" cellspacing="0">
+                                        <tbody><tr>
+                                                <td class="menutitle">被考核部门</td>
+                                            </tr>
+                                        </tbody></table></td>
+                                <td width="36"><img src="./Tpl/static/images/menu_title3a.jpg" width="36" height="26" class="arrow"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>   
+
+                <div class="content" style="visibility: visible; opacity: 1; overflow: hidden; ">
+                    <table width="188" border="0" align="center" cellpadding="0" cellspacing="0">
+                        <tbody><tr>
+                                <td><table width="188" border="0" cellspacing="0" cellpadding="0">
+                                        <tbody><tr>
+                                                <td width="11" rowspan="2" background="./Tpl/static/images/menu_2.gif">&nbsp;</td>
+                                                <td width="166"><img src="./Tpl/static/images/menu_5.gif" width="166" height="3"></td>
+                                                <td width="11" rowspan="2" background="./Tpl/static/images/menu_3.gif">&nbsp;</td>
+                                            </tr>
+                                            <tr>
+                                                <td><table width="100%" border="0" cellpadding="0" cellspacing="0" class="menubg">
+                                                        <tbody><tr>
+                                                                <td height="5"></td>
+                                                            </tr>
+                                                        <foreach name='class' item='value'>
+                                                            <tr>
+                                                                <td class="menubg1" onMouseOver="this.className = 'menubg2'" onMouseOut="this.className = 'menubg1'">
+                                                                    <a href="{:U('Rules/index?cid='.$value[0]['id'])}" target="content">{$value[0]['name']}</a>
+                                                                </td>
+                                                            </tr>
+                                                        </foreach>
+                                                        <tr>
+                                                            <td height="5"></td>
+                                                        </tr>
+                                        </tbody></table></td>
+                            </tr>
+                        </tbody></table></td>
+                    </tr>
+                    </tbody></table>
+                </div>
+
+                <div class="bottom">
+                    <table width="188" border="0" align="center" cellpadding="0" cellspacing="0">
+                        <tbody><tr>
+                                <td height="20" colspan="3" valign="top"><img src="./Tpl/static/images/menu_4.gif" width="188" height="15"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="title">
+                    <table width="188" border="0" align="center" cellpadding="0" cellspacing="0">
+                        <tbody><tr>
+                                <td colspan="3"><img src="./Tpl/static/images/menu_1.gif" width="188" height="14"></td>
+                            </tr>
+                            <tr>
+                                <td width="39"><img src="./Tpl/static/images/menu_title1.jpg" width="39" height="26"></td>
+                                <td width="113" background="./Tpl/static/images/menu_title2.jpg"><table width="113" height="26" border="0" cellpadding="0" cellspacing="0">
+                                        <tbody><tr>
+                                                <td class="menutitle">细则管理</td>
+                                            </tr>
+                                        </tbody></table></td>
+                                <td width="36"><img src="./Tpl/static/images/menu_title3a.jpg" width="36" height="26" class="arrow"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>   
+
+                <div class="content" style="visibility: visible; opacity: 1; overflow: hidden; ">
+                    <table width="188" border="0" align="center" cellpadding="0" cellspacing="0">
+                        <tbody><tr>
+                                <td><table width="188" border="0" cellspacing="0" cellpadding="0">
+                                        <tbody><tr>
+                                                <td width="11" rowspan="2" background="./Tpl/static/images/menu_2.gif">&nbsp;</td>
+                                                <td width="166"><img src="./Tpl/static/images/menu_5.gif" width="166" height="3"></td>
+                                                <td width="11" rowspan="2" background="./Tpl/static/images/menu_3.gif">&nbsp;</td>
+                                            </tr>
+                                            <tr>
+                                                <td><table width="100%" border="0" cellpadding="0" cellspacing="0" class="menubg">
+                                                        <tbody><tr>
+                                                                <td height="5"></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="menubg1" onMouseOver="this.className = 'menubg2'" onMouseOut="this.className = 'menubg1'">
+                                                                    <a href="{:U('Rules/admin')}" target="content">细则管理</a>
+                                                                </td>
+                                                            </tr>
+                                                        
+                                                        <tr>
+                                                            <td height="5"></td>
+                                                        </tr>
+                                        </tbody></table></td>
+                            </tr>
+                        </tbody></table></td>
+                    </tr>
+                    </tbody></table>
+                </div>
+
+                <div class="bottom">
+                    <table width="188" border="0" align="center" cellpadding="0" cellspacing="0">
+                        <tbody><tr>
+                                <td height="20" colspan="3" valign="top"><img src="./Tpl/static/images/menu_4.gif" width="188" height="15"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <?php endif; else : ?> 
+                <!-- 管理员页面-->
+                <div class="title">
+                    <table width="188" border="0" align="center" cellpadding="0" cellspacing="0">
+                        <tbody><tr>
+                                <td colspan="3"><img src="./Tpl/static/images/menu_1.gif" width="188" height="14"></td>
+                            </tr>
+                            <tr>
+                                <td width="39"><img src="./Tpl/static/images/menu_title1.jpg" width="39" height="26"></td>
+                                <td width="113" background="./Tpl/static/images/menu_title2.jpg"><table width="113" height="26" border="0" cellpadding="0" cellspacing="0">
+                                        <tbody><tr>
+                                                <td class="menutitle">功能信息</td>
+                                            </tr>
+                                        </tbody></table></td>
+                                <td width="36"><img src="./Tpl/static/images/menu_title3a.jpg" width="36" height="26" class="arrow"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>   
+
+                <div class="content" style="visibility: visible; opacity: 1; overflow: hidden; ">
+                    <table width="188" border="0" align="center" cellpadding="0" cellspacing="0">
+                        <tbody><tr>
+                                <td><table width="188" border="0" cellspacing="0" cellpadding="0">
+                                        <tbody><tr>
+                                                <td width="11" rowspan="2" background="./Tpl/static/images/menu_2.gif">&nbsp;</td>
+                                                <td width="166"><img src="./Tpl/static/images/menu_5.gif" width="166" height="3"></td>
+                                                <td width="11" rowspan="2" background="./Tpl/static/images/menu_3.gif">&nbsp;</td>
+                                            </tr>
+                                            <tr>
+                                                <td><table width="100%" border="0" cellpadding="0" cellspacing="0" class="menubg">
+                                                        <tbody><tr>
+                                                                <td height="5"></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="menubg1" onMouseOver="this.className = 'menubg2'" onMouseOut="this.className = 'menubg1'">
+                                                                    <a href="{:U('ClassC/index')}" target="content">部门管理</a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="menubg1" onMouseOver="this.className = 'menubg2'" onMouseOut="this.className = 'menubg1'">
+                                                                    <a href="{:U('User/index')}" target="content">用户管理</a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="menubg1" onMouseOver="this.className = 'menubg2'" onMouseOut="this.className = 'menubg1'">
+                                                                    <a href="{:U('ClassC/item')}" target="content">考核权限设置</a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="menubg1" onMouseOver="this.className = 'menubg2'" onMouseOut="this.className = 'menubg1'">
+                                                                    <a href="{:U('Item/index')}" target="content">考核科目设置</a>
+                                                                </td>
+                                                            </tr>
+                                                            <!--<tr>
+                                                                <td class="menubg1" onMouseOver="this.className = 'menubg2'" onMouseOut="this.className = 'menubg1'">
+                                                                    <a href="#" target="content">归档设置</a>
+                                                                </td>
+                                                            </tr>-->
+                                                            <tr>
+                                                                <td class="menubg1" onMouseOver="this.className = 'menubg2'" onMouseOut="this.className = 'menubg1'">
+                                                                    <a href="{:U('Admin/open')}" target="content">考核时间管理</a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="menubg1" onMouseOver="this.className = 'menubg2'" onMouseOut="this.className = 'menubg1'">
+                                                                    <a href="{:U('Data/index')}" target="content">数据整理</a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="menubg1" onMouseOver="this.className = 'menubg2'" onMouseOut="this.className = 'menubg1'">
+                                                                    <a href="{:U('Admin/export')}" target="content" title='导出数据！'>数据维护</a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td height="5"></td>
+                                                            </tr>
+                                                        </tbody></table></td>
+                                            </tr>
+                                        </tbody></table></td>
+                            </tr>
+                        </tbody></table>
+                </div>
+
+                <div class="bottom">
+                    <table width="188" border="0" align="center" cellpadding="0" cellspacing="0">
+                        <tbody><tr>
+                                <td height="20" colspan="3" valign="top"><img src="./Tpl/static/images/menu_4.gif" width="188" height="15"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <?php endif;?>
+                <!--通用菜单-->
+
+                <div class="title">
+                    <table width="188" border="0" align="center" cellpadding="0" cellspacing="0">
+                        <tbody><tr>
+                                <td colspan="3"><img src="./Tpl/static/images/menu_1.gif" width="188" height="14"></td>
+                            </tr>
+                            <tr>
+                                <td width="39"><img src="./Tpl/static/images/menu_title1.jpg" width="39" height="26"></td>
+                                <td width="113" background="./Tpl/static/images/menu_title2.jpg"><table width="113" height="26" border="0" cellpadding="0" cellspacing="0">
+                                        <tbody><tr>
+                                                <td class="menutitle">用户信息</td>
+                                            </tr>
+                                        </tbody></table></td>
+                                <td width="36"><img src="./Tpl/static/images/menu_title3a.jpg" width="36" height="26" class="arrow"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>  
+                <div class="content" style="visibility: visible; opacity: 1; overflow: hidden; ">
+                    <table width="188" border="0" align="center" cellpadding="0" cellspacing="0">
+                        <tbody><tr>
+                                <td><table width="188" border="0" cellspacing="0" cellpadding="0">
+                                        <tbody><tr>
+                                                <td width="11" rowspan="2" background="./Tpl/static/images/menu_2.gif">&nbsp;</td>
+                                                <td width="166"><img src="./Tpl/static/images/menu_5.gif" width="166" height="3"></td>
+                                                <td width="11" rowspan="2" background="./Tpl/static/images/menu_3.gif">&nbsp;</td>
+                                            </tr>
+                                            <tr>
+                                                <td><table width="100%" border="0" cellpadding="0" cellspacing="0" class="menubg">
+                                                        <tbody><tr>
+                                                                <td height="5"></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="menubg1" onMouseOver="this.className = 'menubg2'" onMouseOut="this.className = 'menubg1'">
+                                                                    <a href="{:U('Msg/index')}" target="content">申诉管理</a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="menubg1" onMouseOver="this.className = 'menubg2'" onMouseOut="this.className = 'menubg1'">
+                                                                    <a href="{:U('Exame/affirm')}" target="content">分数确认</a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="menubg1" onMouseOver="this.className = 'menubg2'" onMouseOut="this.className = 'menubg1'">
+                                                                    <a href="{:U('Exame/rank')}" target="content">排名查看</a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="menubg1" onMouseOver="this.className = 'menubg2'" onMouseOut="this.className = 'menubg1'">
+                                                                    <a href="{:U('User/user')}" target="content">修改密码</a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="menubg1" onMouseOver="this.className = 'menubg2'" onMouseOut="this.className = 'menubg1'">
+                                                                    <a href="{:U('Log/index')}" target="content">登录信息</a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="menubg1" onMouseOver="this.className = 'menubg2'" onMouseOut="this.className = 'menubg1'">
+                                                                    <a href="{:U('Notice/index')}" target="content">通知消息</a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td height="5"></td>
+                                                            </tr>
+                                                        </tbody></table></td>
+                                            </tr>
+                                        </tbody></table></td>
+                            </tr>
+                        </tbody></table>
+                </div>
+
+
+
+                <div class="bottom">
+                    <table width="188" border="0" align="center" cellpadding="0" cellspacing="0">
+                        <tbody><tr>
+                                <td height="20" colspan="3" valign="top"><img src="./Tpl/static/images/menu_4.gif" width="188" height="15"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+                <div class="title">
+                    <table width="188" border="0" align="center" cellpadding="0" cellspacing="0">
+                        <tbody><tr>
+                                <td colspan="3"><img src="./Tpl/static/images/menu_1.gif" width="188" height="14"></td>
+                            </tr>
+                            <tr>
+                                <td width="39"><img src="./Tpl/static/images/menu_title1.jpg" width="39" height="26"></td>
+                                <td width="113" background="./Tpl/static/images/menu_title2.jpg"><table width="113" height="26" border="0" cellpadding="0" cellspacing="0">
+                                        <tbody><tr>
+                                                <td class="menutitle">警务管理</td>
+                                            </tr>
+                                        </tbody></table></td>
+                                <td width="36"><img src="./Tpl/static/images/menu_title3a.jpg" width="36" height="26" class="arrow"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>  
+
+                <div class="content" style="visibility: visible; opacity: 1; overflow: hidden; ">
+                    <table width="188" border="0" align="center" cellpadding="0" cellspacing="0">
+                        <tbody><tr>
+                                <td><table width="188" border="0" cellspacing="0" cellpadding="0">
+                                        <tbody><tr>
+                                                <td width="11" rowspan="2" background="./Tpl/static/images/menu_2.gif">&nbsp;</td>
+                                                <td width="166"><img src="./Tpl/static/images/menu_5.gif" width="166" height="3"></td>
+                                                <td width="11" rowspan="2" background="./Tpl/static/images/menu_3.gif">&nbsp;</td>
+                                            </tr>
+                                            <tr>
+                                                <td><table width="100%" border="0" cellpadding="0" cellspacing="0" class="menubg">
+                                                        <tbody><tr>
+                                                                <td height="5"></td>
+                                                            </tr>
+                                                            <?php 
+                                                            $user = $model->user;
+                                                            if(!isset($user['cid']) || $user['is_unit'] == 0):
+                                                            ?>
+                                                            <tr>
+                                                                <td class="menubg1" onMouseOver="this.className = 'menubg2'" onMouseOut="this.className = 'menubg1'">
+                                                                    <a href="{:U('Police/listC')}" target="content">警员管理</a>
+                                                                </td>
+                                                            </tr>
+                                                            <?php endif;?>
+                                                            <tr>
+                                                                <td class="menubg1" onMouseOver="this.className = 'menubg2'" onMouseOut="this.className = 'menubg1'">
+                                                                    <a href="{:U('Family/index')}" target="content">家庭(房舍)管理</a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="menubg1" onMouseOver="this.className = 'menubg2'" onMouseOut="this.className = 'menubg1'">
+                                                                    <a href="{:U('Masses/index')}" target="content">群众信息</a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="menubg1" onMouseOver="this.className = 'menubg2'" onMouseOut="this.className = 'menubg1'">
+                                                                    <a href="{:U('Interview/index')}" target="content">走访信息</a>
+                                                                </td>
+                                                            </tr>
+                                                             <tr>
+                                                                <td class="menubg1" onMouseOver="this.className = 'menubg2'" onMouseOut="this.className = 'menubg1'">
+                                                                    <a href="{:U('NOBank/index')}" target="content">号码库管理</a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="menubg1" onMouseOver="this.className = 'menubg2'" onMouseOut="this.className = 'menubg1'">
+                                                                    <a href="{:U('Sms/index')}" target="content">信息群发</a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="menubg1" onMouseOver="this.className = 'menubg2'" onMouseOut="this.className = 'menubg1'">
+                                                                    <a href="{:U('Sms/listC')}" target="content">消息发送记录</a>
+                                                                </td>
+                                                            </tr>
+                                                             <tr>
+                                                                <td class="menubg1" onMouseOver="this.className = 'menubg2'" onMouseOut="this.className = 'menubg1'">
+                                                                    <a href="{:U('SmsReply/index')}" target="content">信息回复管理</a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="menubg1" onMouseOver="this.className = 'menubg2'" onMouseOut="this.className = 'menubg1'">
+                                                                    <a href="{:U('Review/index')}" target="content">评警信息查询</a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td height="5"></td>
+                                                            </tr>
+                                                        </tbody></table></td>
+                                            </tr>
+                                        </tbody></table></td>
+                            </tr>
+                        </tbody></table>
+                </div>
+
+                <div class="bottom">
+                    <table width="188" border="0" align="center" cellpadding="0" cellspacing="0">
+                        <tbody><tr>
+                                <td height="20" colspan="3" valign="top"><img src="./Tpl/static/images/menu_4.gif" width="188" height="15"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!--通用菜单结束-->
+
+            </div>
+        </div>
+        <div id="main">
+            <iframe name='content' id='content' src="{:U('Admin/Aindex')}"  bordercolor="aqua" frameborder="0" scrolling="auto" width="100%" height="400"  >
+            </iframe>
+            <script type='text/javascript'>
+        document.getElementById('content').style.height = window.screen.availHeight - 270;
+        document.getElementById('menu_main').style.height = window.screen.availHeight - 270;
+            </script>
+        </div>
+    </div>
+</body>
+</html>

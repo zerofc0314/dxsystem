@@ -1,0 +1,66 @@
+
+<import file="js.suggest.js.coolautosuggest"  basepath="./Tpl/static" />
+<import file="js.suggest.js.coolfieldset"  basepath="./Tpl/static" />
+<import type='css' file="js.suggest.css.coolfieldset"  basepath="./Tpl/static" />
+<import type='css' file="js.suggest.css.coolautosuggest"  basepath="./Tpl/static" />
+
+<script type="text/javascript">
+    function selectMid(adr) {
+        $("#mid").empty(); //清空下拉框
+        $("#mid").selectBox('destroy');
+        $('#fid').val('');
+        $.post("{:U('Masses/search')}", 'adr=' + adr, function(e) {
+            if (e != 'null') {
+                e = eval("(" + e + ")");
+                $('#fid').val(e[0].fid);
+                for (i = 0; i < e.length; i++) {
+                    $("<option></option>")
+                            .val(e[i].mid)
+                            .text(e[i].name + '(' + e[i].sex + ')')
+                            .appendTo("#mid");  //填充下拉
+                }
+            }
+            $("#mid").selectBox();
+        });
+
+    }
+
+</script>
+<form method="post">
+    <table width="100%" height='100%' border="0" cellpadding="0" cellspacing="1" bgcolor="b5d6e6">
+        <tr class="bar">
+            <td width="3%" colspan="4" >
+                增加受访信息
+                <div id='htm'></div>
+            </td>
+        </tr>
+        <tr class="list">
+            <td width="20%">家庭(房屋)地址：</td>
+            <td colspan="3" ALIGN="left">
+                <input type="text" name="adr" id='adr' size="40" onblur="selectMid(this.value)"><label> * 支持模糊方式进行查询</label>
+                <script language="javascript" type="text/javascript">
+    $("#adr").coolautosuggest({
+        url: "{:U('Family/search?adr=')}"
+    });
+                </script>
+                <input type="hidden" name="fid" id="fid">
+            </td>
+        </tr>
+        <tr class="list">
+            <td>姓名：</td>
+            <td ALIGN="left" colspan="3">
+                <select name="mid" id="mid"></select> <label>* </label>
+            </td>
+        </tr>
+        <tr class="list">
+            <td>备注信息：</td>
+            <td colspan="3" ALIGN="left">
+                <textarea name="remark"  style="height: 200px;width: 400px;"></textarea>
+        </tr>
+        <tr class="bar">
+            <td colspan="4" >
+                <input type="submit" value="增加"/>
+            </td>
+        </tr>
+    </table>
+</form>

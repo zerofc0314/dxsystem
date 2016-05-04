@@ -1,0 +1,87 @@
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+    <tr>
+        <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td width="52"><img src="./Tpl/static/images/main_1.jpg" width="52" height="55" /></td>
+                    <td background="./Tpl/static/images/main_2.jpg" class="title1">申诉信息</td>
+                    <td width="52"><img src="./Tpl/static/images/main_3.jpg" width="52" height="55" /></td>
+                </tr>
+            </table></td>
+    </tr>
+    <tr>
+        <td>
+            <form method="post">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td width="15" background="./Tpl/static/images/main_4.gif">　</td>
+                        <td background="./Tpl/static/images/main_9.gif">
+                            <table width="99%" border="0" align="center" cellpadding="0" cellspacing="1" class="table">
+                                <tr>
+                                    <th class="td">申诉单位</th>
+                                    <td  class="td">{$class[$data['cid']]['name']}</td>
+                                </tr>
+                                <tr>
+                                    <th class="td">主评单位</th>
+                                    <td  class="td">{$class[$data['a_cid']]['name']}</td>
+                                </tr>
+                                <tr>
+                                    <th class="td">考核项目</th>
+                                    <td  class="td" >{$data['item']}</td>
+                                </tr>
+                                <tr>
+                                    <th class="td">申诉内容</th>
+                                    <td class="td">{$data['msg']}</td>
+                                </tr>
+                                <tr>
+                                    <th class="td">申诉时间</th>
+                                    <td class="td"><?php echo date('Y-m-d H:i:s',$data['send_date']); ?>    </td>
+                                </tr>
+                                <tr>
+                                    <th class="td">回复信息</th>
+                                    <td class="td">
+                                        <?php if($user):?>
+                                        <textarea  name="reply" style="width: 330px; height: 100px;" >{$data['reply']}</textarea>
+                                        <?php else: ?>
+                                        {$data['reply']}
+                                        <?php endif; ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="td">处理状态</th>
+                                    <td class="td"><?php 
+                                        if(!$data['read_date'] && !$data['reply_date']){
+                                        echo '<font color=red>等待主评单位读取</font>';
+                                        }elseif(!$data['read_date']){
+                                        echo '<font color=red>未阅读</font>';
+                                        }elseif(!$data['reply_date']){
+                                        echo '<font color=red>未回复</font>';
+                                        }else{
+                                        echo '处理完成';
+                                        }
+                                        ?>
+                                    </td>
+                                </tr>
+                                <?php if($user):?>
+                                <tr>
+                                    <td colspan="2" class="td"align="center">
+                                        <input type="submit" class="button" value="进行处理" />
+
+                                    </td>
+                                </tr>
+                                <?php endif;?>
+                                </form>
+                            </table></td>
+                        <td width="15" background="./Tpl/static/images/main_5.gif">　</td>
+                    </tr>
+                </table></td>
+    </tr>
+    <tr>
+        <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td width="52"><img src="./Tpl/static/images/main_6.gif" width="52" height="16" /></td>
+                    <td background="./Tpl/static/images/main_7.gif" width="100%"></td>
+                    <td width="52"><img src="./Tpl/static/images/main_8.gif" width="52" height="16" /></td>
+                </tr>
+            </table></td>
+    </tr>
+</table>

@@ -1,0 +1,109 @@
+<script type="text/javascript">
+    function selectCid() {
+        var cid = $('#cid').val();
+        $("#pno").empty(); //清空警员的下拉框
+        $("#pno").selectBox('destroy');
+        $.getJSON("{:U('Police/Police?cid=')}" + cid, function(e) {
+            if (e) {
+                for (i = 0; i < e.length; i++) {
+                    $("<option></option>")
+                            .val(e[i].no)
+                            .text(e[i].name)
+                            .appendTo("#pno");  //填充下拉
+                }
+            }
+            $("#pno").selectBox();
+        });
+    }
+</script>
+<form method="post">
+    <table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="b5d6e6">
+        <tr class="bar">
+            <td width="3%" colspan="4" >
+                修改家庭（房屋）信息
+                <div id='htm'></div>
+            </td>
+        </tr>
+        <tr class="list">
+            <td width="20%">房舍编号：</td>
+            <td colspan="3" ALIGN="left">
+                <input type="text" name="no" size="20" value="{$data['no']}"><label>* 如A区302室，或255412号</label>
+            </td>
+        </tr>
+        <tr class="list">
+            <td>类型：</td>
+            <td ALIGN="left">
+                <select name="use">
+                    <foreach name="attribute['type']" item='v1'>
+                        <option value="{$key}" <?php if($key==$data['type']){ echo 'selected';} ?>>{$v1}</option>
+                    </foreach>
+                </select>
+                <label>*</label></td>
+            <td width="10%">用途：</td>
+            <td ALIGN="left">
+                <select name="use">
+                    <foreach name="attribute['use']" item='v2'>
+                        <option value="{$key}" <?php if($key==$data['use']){ echo 'selected';} ?>>{$v2}</option>
+                    </foreach>
+                </select>
+            </td>
+        </tr>
+        <tr class="list">
+            <td>房屋电话：</td>
+            <td colspan="3" ALIGN="left"><input type="text" name="phone" value="{$data['phone']}"><label>*家庭（房屋）使用的电话</label>
+            </td>
+        </tr>
+        <tr class="list">
+            <td>负责人：</td>
+            <td ALIGN="left">
+                <input type="text" name="link_name" size="6" value="{$data['link_name']}"><label>* 负责人</label>
+            </td>
+            <td>性别：</td>
+            <td ALIGN="left">
+                <select name="link_sex" class="select">
+                    <option value="男">男</option>
+                    <option value="女">女</option>
+                </select>
+            </td>
+        </tr>
+        <tr class="list">
+            <td>身份证：</td>
+            <td colspan="3" ALIGN="left"><input type="text" name="idcard" size="22" value="{$data['idcard']}"><label>* </label>
+            </td>
+        </tr>
+        <tr class="list">
+            <td>负责人电话：</td>
+            <td colspan="3" ALIGN="left"><input type="text" name="link_phone" value="{$data['link_phone']}"><label>* 负责人使用的电话</label>
+            </td>
+        </tr>
+        <tr class="list">
+            <td>录入部门：</td>
+            <td ALIGN="left">
+                <select name="cid"  id='cid'  onchange="selectCid()">
+                    <foreach name='class' item='v'>
+                        <option value="{$key}" <?php if($data['cid']==$key ){echo 'selected';} ?>>{$v}</option>
+                    </foreach>
+                </select>
+            </td>
+            <td>录入警员：</td>
+            <td ALIGN="left">
+                <select name="pno" id='pno'>
+                    <option value="{$data['pno']}">{$data['pname']}</option>
+                </select>
+            </td>
+        </tr>
+        <tr class="list">
+            <td>家庭（房屋）地址：</td>
+            <td colspan="3" ALIGN="left"><input type="text" name="address" size="60" value="{$data['address']}"></td>
+        </tr>
+        <tr class="list">
+            <td>备注信息：</td>
+            <td colspan="3" ALIGN="left"><input type="text" name="remark" size="60" value="{$data['remark']}"></td>
+        </tr>
+        <tr class="bar">
+            <td colspan="4" >
+                <input type="submit" value="修改"/>
+            </td>
+        </tr>
+    </table>
+</form>

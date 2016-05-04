@@ -1,0 +1,42 @@
+
+<form method="POST">
+    <table width="90%" id="table"  border="1" class="t1">
+        <thead>
+        <th colspan="2" >修改用户</th>
+        </thead>
+        <tr>
+            <td>
+                所属类别：
+            </td>
+            <td>
+                <select name='unit'>
+                    <foreach name='sort' item='v1'>
+                        <option value="{$v1['sid']}" <?php if($user[0]['unit'] == $v1['sid']){echo 'selected';} ?> >{$v1['name']}</option>
+                    </foreach>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>所属单位：</td>
+            <td>
+                <select name='cid'>
+                    <foreach name='class' item='v2'>
+                        <option value="{$v2['id']}" <?php if($user[0]['cid'] == $v2['id']){echo 'selected';} ?> >{$v2['name']}</option>
+                    </foreach>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>用户名：</td>
+            <td><input type="text" name='name' readonly='readonly' value ='{$user[0]['name']}'></td>
+        </tr>
+        <tr>
+            <td>密码：</td>
+            <td><input type="text" name='pass' value ='{$user[0]['pass']}' ></td>
+        </tr>
+
+        <tr>
+            <td colspan="2"><input type='submit' value='修改' /></td>
+        </tr>
+    </table>
+</form>

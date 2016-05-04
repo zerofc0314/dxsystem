@@ -1,0 +1,155 @@
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#add').click(function() {
+            show("{:U('Police/add')}", '增加警员');
+        });
+    });
+    function edit(id) {
+        var url = "{:U('Police/edit?id')}" + id;
+        show(url, '编辑警员');
+    }
+    function del(id) {
+        asyncbox.confirm('您确定要删除当前信息吗？删除后不可恢复！', '删除确认', function(action) {
+            //confirm 返回三个 action 值，分别是 'ok'、'cancel' 和 'close'。
+            if (action == 'ok') {
+                $.post("{:U('Police/del')}", 'id=' + id, function(e) {
+                    if (e == '1') {
+                        asyncbox.tips('删除成功 ! ', 'success');
+                        $('.list[flag=C_' + id + ']').remove();
+                    } else {
+                        asyncbox.tips('删除失败 !', 'error');
+                    }
+                });
+            }
+        }
+        );
+    }
+    function search() {
+        var cid = $('#cid').val();
+        var indate_1 = $('#intdate_1').val();
+        var indate_2 = $('#intdate_2').val();
+        var status = $("#status").val();
+        var url = "{:U('Police/listC?cid=')}" + cid;
+        if (indate_1) {
+            url += '&indate_1=' + indate_1;
+        }
+        if (indate_2) {
+            url += '&indate_2=' + indate_2;
+        }
+        url += '&status=' + status;
+        if (indate_1 && indate_2) {
+            var beginDate = new Date(indate_1.replace(/-/g, "/"));
+            var endDate = new Date(indate_2.replace(/-/g, "/"));
+            if (beginDate >= endDate) {
+                alert("结束时间必须大于开始时间！");
+                return false;
+            }
+        }
+        location.href = url;
+    }
+</script>
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="b5d6e6">
+    <tr class="bar">
+        <td colspan="9">
+            <table border="1" align="left" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td width="60">部门：</td>
+                    <td width="150"><select name='cid' id="cid">
+                            <option value='全部'>全部</option>
+                            <?php 
+                            $user = session('rabc');
+                            var_dump($user);
+                            if(isset($user['c_cid']) && NULL != $user['c_cid']){
+                            $cid = explode(',', $user['c_cid']);
+                            foreach($cid as $v){
+                            echo '<option value="'.$class['$v']['id'].'" '.($_GET['cid'] == $class['$v']['id'] ? 'selected': '' ).'>'.$class[$v]['name'].'</option>';
+                            }
+                            }elseif(!isset($user['cid'])){
+                            foreach($class as $v){
+                            echo '<option value="'.$v['id'].'"'.($_GET['cid'] == $v['id'] ? 'selected': '' ).'>'.$v['name'].'</option>';
+                            }
+                            }
+                            ?>
+                        </select></td>
+                    <td width="60">入警时间：</td>
+                    <td width="220">
+                        <input type="text" id="intdate_1" name='intdate_1' size='10' class="Wdate" onClick="WdatePicker()" value="<?php echo $_GET['indate_1'] ?>"> 至 
+                        <input type='text' id="intdate_2" name='intdate_2' class="Wdate" size='10' onClick="WdatePicker()" value="<?php echo $_GET['indate_2'] ?>">
+                    </td>
+                    <td width="60">状态：</td> 
+                    <td width="150"><select name='status' id="status">
+                            <option value="0" <?php if($_GET['status'] == 0){ echo 'selected';} ?>>正常</option>
+                            <option value="1" <?php if($_GET['status'] == 1){ echo 'selected';} ?>>禁止</option>
+                        </select></td> 
+                    <td width="60"><button onclick='search()'>筛选</button></td>
+                </tr>
+            </table>
+            <table border="0" align="right" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td width="60">
+                        <table width="90%" border="0" cellpadding="0" cellspacing="0">
+                            <tr>
+                                <td id="add" style="cursor: hand">
+                                    <img src="./Tpl/static/images/22.gif" width="14" height="14" />新增
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="9"></td>
+    </tr>
+    <tr class="bar">
+        <!--<td width="3%">
+            <input type="checkbox" flag='check' id='checked' onclick='check()' />
+        </td>-->
+        <td width="3%">序号</td>
+        <td width="10%">所属单位</td>
+        <td width="8%">姓名</td>
+        <td width="10%">警号</td>
+        <td width="10%">密码</td>
+        <td width="10%">手机</td>
+        <td width="10%">入警时间</td>
+        <td width="5%">状态</td>
+        <td width="15%">基本操作</td>
+    </tr>
+    <?php 
+    if($list):
+    $i = 0;
+    foreach ( $list as $v ){
+    $i++;
+    ?>
+    <tr class="list" flag='C_{$v['id']}'>
+        <!--<td >
+            <input type="checkbox" class='checkbox' name="id[]" value="{$v['id']}" flag=check />
+        </td>-->
+        <td>{$i}</td>
+        <td>{$class[$v['cid']]['name']}</td>
+        <td>{$v['name']}</td>
+        <td>{$v['no']}</td>
+        <td>{$v['pass']}</td>
+        <td>{$v['phone']}</td>
+        <td><?php echo date('Y-m-d',$v['in_date']) ?></td>
+        <td><?php if($v['status']){echo '禁止';} ?></td>
+        <td >
+            <a href="javascript:;"  onclick="edit({$v['id']})">
+                <img src="./Tpl/static/images/edt.gif" width="16" height="16" />编辑
+            </a>
+            &nbsp; &nbsp;
+            <a href="javascript:;"  onclick="del({$v['id']})">
+                <img src="./Tpl/static/images/del.gif" width="16" height="16" />删除
+            </a>
+        </td>
+    </tr>
+    <?php }endif; ?>
+    <tr>
+        <td  colspan="9" class="bar">
+            {$page}
+        </td>
+    </tr>
+</table>

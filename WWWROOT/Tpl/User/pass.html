@@ -1,0 +1,91 @@
+<script language="javascript">
+    function change_admin() {
+        if (document.getElementById("admin_pwd").value == document.getElementById("sub_pwd").value) {
+            alert('不能和原密码相同');
+            return false;
+        }
+        if (document.getElementById("admin_pwd1").value != document.getElementById("admin_pwd").value) {
+            alert("您两次输入的密码不相同!请重新输入!");
+            return false;
+        }
+        form1.submit();
+
+    }
+</script>
+
+<body>
+    <div id="content">
+        <div id="right">
+            <div class="right_body"><br />
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <table width="42%" border="0" align="center" cellpadding="0" cellspacing="0">
+        <tr>
+            <td><table width="102%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td width="52"><img src="./Tpl/static/images/main_1.jpg" width="52" height="55" /></td>
+                        <td background="./Tpl/static/images/main_2.jpg" class="title1">密码修改</td>
+                        <td width="52"><img src="./Tpl/static/images/main_3.jpg" width="52" height="55" /></td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><table width="102%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td width="15" background="./Tpl/static/images/main_4.gif">　</td>
+                        <td background="./Tpl/static/images/main_9.gif"><span class="right_body">
+
+                            </span>
+                            <table width="99%" border="0" cellpadding="0" cellspacing="1" class="table">
+                                <tr>
+                                    <th class="td2" colspan="2">用户密码修改</th>
+                                </tr>
+
+                                <tr>
+                                    <td class="td" align="center" width="25%">用户名:</td>
+                                    <td class="td" align="center" width="73%">{$user['name']}</td>
+                                </tr>
+
+                                <form method="post" name="form1" id="form1">
+                                    <tr>
+                                        <td class="td" align="center" width="25%">原始密码:</td>
+                                        <td class="td" align="center" width="73%">
+                                            <input type="password" name="sub_pwd" id="sub_pwd" size="16" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="td" align="center" width="25%">修改密码:</td>
+                                        <td class="td" align="center" width="73%">
+                                            <input name="admin_pwd"  type="password" id="admin_pwd"  size="16"  /></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="td" align="center" width="25%">确认密码:</td>
+                                        <td class="td" align="center" width="73%">
+                                            <input type="password" name="admin_pwd1" id="admin_pwd1" size="16" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="td" align="center" width="98%" colspan="2">
+                                            <input type="button" class="button" onClick="change_admin()" value="确认修改" />　</td>
+                                    </tr>
+
+                                </form>
+                            </table>
+                            <span class="right_body">
+
+                            </span></td>
+                        <td width="15" background="./Tpl/static/images/main_5.gif">　</td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td><table width="102%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td width="52"><img src="./Tpl/static/images/main_6.gif" width="52" height="16" /></td>
+                        <td background="./Tpl/static/images/main_7.gif" width="80%"></td>
+                        <td width="59">
+                            <img src="./Tpl/static/images/main_8.gif" width="59" height="16" /></td>
+                    </tr>
+                </table></td>
+        </tr>
+    </table>

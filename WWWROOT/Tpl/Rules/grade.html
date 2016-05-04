@@ -1,0 +1,79 @@
+<table width="840" border="0" align="center" cellpadding="0" cellspacing="0">
+    <tr>
+        <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td width="52"><img src="./Tpl/static/images/main_1.jpg" width="52" height="55" /></td>
+                    <td background="./Tpl/static/images/main_2.jpg" class="title1">信息浏览(当前被评分单位:<?php echo $class[$_GET['cid']]['name'] ?>)</td>
+                    <td width="52"><img src="./Tpl/static/images/main_3.jpg" width="52" height="55" /></td>
+                </tr>
+            </table></td>
+    </tr>
+    <tr>
+        <td>
+            <form method="post">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0"/>
+                <tr>
+                    <td width="15" background="./Tpl/static/images/main_4.gif">　</td>
+                    <td background="./Tpl/static/images/main_9.gif"><table width="99%" border="0" align="center" cellpadding="0" cellspacing="1" class="table"/>
+
+
+                <tr>
+                    <th style="width: 243px" class="td">绩效细则</th>
+                    <td class="td" >
+                        <table border="1" id="table1" height="278" style="border-collapse: collapse; width: 85%;" bordercolor="#000000">
+                            <tr>
+                                <td valign="top" style="width: 600px">
+                                    <div  style="overflow-y: scroll;height: 300px;background-color: white;text-align:left;"> {$data['content']}</div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="td" style="width: 243px">评分单位</th>
+                    <td class="td"><?php echo $class[$data['cid']]['name'] ?></td>
+                </tr>
+                <tr>
+                    <th class="td" style="width: 243px">细则分值</th>
+                    <td class="td" ><input type="text" name="point"  size="6"value="{$data['point']}" disabled />分
+                    </td>
+                </tr>
+                <tr>
+                    <th class="td" style="width: 243px">得分</th>
+                    <td class="td">
+                        <input type="text" name="get_point" value="{$data['get_point']}" size="6" />  分 
+                    </td>
+                </tr>
+                <tr>
+                    <th class="td" style="width: 243px">备注</th>
+                    <td class="td">
+                        <textarea rows="6" name="review" cols="76" id="exam_remarks">{$data['review']}
+                        </textarea></td>
+                </tr>
+                <tr>
+                    <th class="td">录入时间</th>
+                    <td width="1243" class="td"><?php echo date('Y-m-d,H:i:s',$data['date']); ?></td>
+                </tr>
+
+                <tr>
+                    <td colspan="2" class="td"align="center">
+                        <input type="submit" class="button" value="提交评分" <?php if($data['ok']){echo 'disabled title=单位已经确认分数，不可评分';} ?> />
+                <input type="button" class="button" onClick="javascript:window.history.go(-1);" value="返回" /></form>
+        </td>
+    </tr>
+
+</table></td>
+<td width="15" background="./Tpl/static/images/main_5.gif">　</td>
+</tr>
+</table></td>
+</tr>
+<tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <td width="52"><img src="./Tpl/static/images/main_6.gif" width="52" height="16" /></td>
+                <td background="./Tpl/static/images/main_7.gif" width="100%"></td>
+                <td width="52"><img src="./Tpl/static/images/main_8.gif" width="52" height="16" /></td>
+            </tr>
+        </table></td>
+</tr>
+</table>

@@ -1,0 +1,58 @@
+<script type="text/javascript">
+    function check() {
+        var obj = $('input[flag=check]');
+        if (document.getElementById('checked').checked == true) {
+            for (var i = 0; i < obj.length; i++) {
+                obj[i].checked = true;
+            }
+        } else {
+            for (var i = 0; i < obj.length; i++) {
+                obj[i].checked = false;
+            }
+        }
+    }
+    function checko() {
+        var obj = $('input[flag=check]');
+        for (var i = 0; i < obj.length; i++) {
+            if (obj[i].checked == true) {
+                obj[i].checked = false;
+            } else {
+                obj[i].checked = true;
+            }
+        }
+    }
+
+</script>
+<form method="POST">
+    <input type="hidden" name="s" value='true'>
+    <table width="90%" id="table"  border="1" class="t1">
+        <thead>
+        <th width="30%">所属类别</th>
+        <th width="20%">部门名称</th>
+        <th width="30%">可考核<br>(
+            <input type='checkbox' id='checked' onclick="check()"/>全选
+            <input type='checkbox' id='checkohter' onclick="checko()"/>反选
+            )</th>
+        </thead>
+        <?php if($data['class']){
+        ?>
+        <foreach name="data['class']" item="value">
+            <tr class="a1" flag='C_{$value['id']}'>
+                <td>{$data['sort'][$value['sid']]['name']}</td>
+                <td>{$value['name']}</td>
+                <td>
+                    <input type="checkbox" name="classC[]" value="{$value['id']}" flag="check"
+                           <?php echo in_array($value['id'],$control_class) ? 'checked' : '' ?> >
+                </td>
+            </tr> 
+        </foreach>
+        <?php  }else{ ?>
+        <tr>
+            <td colspan="3">没有任何信息，请先添加部门添加</td>
+        </tr> 
+        <?php }?>
+        <tr>
+            <td colspan="3"><input type="submit" value="保存"></td>
+        </tr> 
+    </table>
+</form>

@@ -1,0 +1,103 @@
+<script type="text/javascript">
+    function getRules() {
+        asyncbox.open({
+            url: "{:U('Rules/getRules')}",
+            title: '细则调取',
+            btnsbar: $.btn.OKCANCEL,
+            id:'getRules',
+            callback: function(action, iframe, returnValue) {
+                //判断 action 值。
+                        if (action == 'ok') {
+                    //预设 $.returnValue 后可以在 page 模式中使用 returnValue。
+                          var a= iframe.fun();
+                          
+                    }
+                }
+        });
+       
+    }
+</script>
+<table width="690" border="0" align="center" cellpadding="0" cellspacing="0">
+    <tr>
+        <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td width="52"><img src="./Tpl/static/images/main_1.jpg" width="52" height="55" /></td>
+                    <td background="./Tpl/static/images/main_2.jpg" class="title1">{$title}</td>
+                    <td width="52"><img src="./Tpl/static/images/main_3.jpg" width="52" height="55" /></td>
+                </tr>
+            </table></td>
+    </tr>
+    <tr>
+        <td>
+            <form method="post">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td width="15" background="./Tpl/static/images/main_4.gif">　</td>
+                        <td background="./Tpl/static/images/main_9.gif"><table width="99%" border="0" align="center" cellpadding="0" cellspacing="1" class="table">
+                                <tr>
+                                    <th style="width: 957px" class="td">细则内容:</th>
+                                    <td width="1243" class="td" >
+                                        <textarea name="content" style="width:550px;height:200px;visibility:hidden;"></textarea>
+                                       <!-- <input type="button" class="button" onclick="getRules()" value="调取细则"/>-->
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="td" style="width: 957px">评分单位:</th>
+                                    <td width="1243" class="td"><?php $user=session('rabc');echo  $user['name']; ?></td>
+                                </tr>
+                                <tr>
+                                    <th class="td" style="width: 957px">考核项目:</th>
+                                    <td width="1243" class="td">
+                                        <select name="item_name"size="1"  id="item_name">
+                                            <foreach name='item' item='value'>
+                                                <option value='{$value['id']}'>{$value['item']}</option>
+                                            </foreach>
+                                        </select>
+                                        <select name="sub_name" id="sub_name">
+                                            <option value='细则相同'>通用细则</option>
+                                            <foreach name='class' item='value2'>
+                                                <option value='{$value2[0]['id']}'>{$value2[0]['name']}</option>
+                                            </foreach>
+
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="td">考核时间:</th>
+                                    <td width="1243" class="td">
+
+                                        <select name="year" size="1" >
+                                            <?php  echo '<option>'.(date('Y',time())-1).'</option>'; ?>
+                                            <?php  echo '<option selected>'.date('Y',time()).'</option>'; ?>
+                                            <?php  echo '<option>'.(date('Y',time())+1).'</option>'; ?>
+                                        </select>年
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="td">分值:</th>
+                                    <td width="1243" class="td">
+                                        <input type="text" name="point" id="exam_value" size="3">分</td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="2" class="td"align="center">
+                                        <input type="submit" class="button" value="确认添加" onclick="chack_exam_value()" />
+                                        <input type="button" class="button" onClick="javascript:window.history.go(-1);" value="返回" /></form>
+                                    </td>
+                                </tr>
+                                </form>
+                            </table></td>
+                        <td width="15" background="./Tpl/static/images/main_5.gif">　</td>
+                    </tr>
+                </table></td>
+    </tr>
+    <tr>
+        <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td width="52"><img src="./Tpl/static/images/main_6.gif" width="52" height="16" /></td>
+                    <td background="./Tpl/static/images/main_7.gif" width="100%"></td>
+                    <td width="52"><img src="./Tpl/static/images/main_8.gif" width="52" height="16" /></td>
+                </tr>
+            </table></td>
+    </tr>
+</table>

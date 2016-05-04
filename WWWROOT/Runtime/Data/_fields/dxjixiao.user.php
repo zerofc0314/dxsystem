@@ -1,0 +1,1 @@
+<?php	return array ( 0 => 'id', 1 => 'name', 2 => 'pass', 3 => 'unit', 4 => 'cid', 5 => 'is_unit', 6 => 'c_cid', '_autoinc' => true, '_pk' => 'id', '_type' => array ( 'id' => 'int(11)', 'name' => 'varchar(20)', 'pass' => 'varchar(20)', 'unit' => 'int(2)', 'cid' => 'int(4)', 'is_unit' => 'tinyint(1)', 'c_cid' => 'text', ), );?>

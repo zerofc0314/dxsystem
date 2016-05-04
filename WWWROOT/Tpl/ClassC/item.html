@@ -1,0 +1,33 @@
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#add').click(function() {
+            show("{:U('ClassC/add')}", '增加部门');
+        });
+    });
+    function look(id) {
+        var url = '{:U('ClassC/showClass?id')}' + id;
+                show(url, '修改权限');
+    }
+</script>
+<table width="90%" id="table"  border="1" class="t1">
+    <thead>
+    <th width="30%">所属类别</th>
+    <th width="20%">部门名称</th>
+    <th width="30%">可考核部门管理</th>
+</thead>
+<?php if($data['class']){ ?>
+<foreach name="data['class']" item="value">
+    <tr class="a1" flag='C_{$value['id']}'>
+        <td>{$data['sort'][$value['sid']]['name']}</td>
+        <td>{$value['name']}</td>
+        <td>
+            <input type="button" onclick="look({$value['id']})" value="查看"/>
+        </td>
+    </tr> 
+</foreach>
+<?php  }else{ ?>
+<tr>
+    <td colspan="3">没有任何信息，请添加</td>
+</tr> 
+<?php }?>
+</table>

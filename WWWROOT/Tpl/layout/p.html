@@ -1,0 +1,147 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+            <import file="js.jquery"  basepath="./Tpl/static" />
+            <import file="js.asyncbox.AsyncBox"  basepath="./Tpl/static" />
+            <import type='css' file="js.asyncbox.skins.ZCMS.asyncbox"  basepath="./Tpl/static" />
+            <import file="js.DatePicker.WdatePicker"  basepath="./Tpl/static" />
+            <import file="js.selectBox"  basepath="./Tpl/static" />
+            <import type='css' file="css.selectBox"  basepath="./Tpl/static" />
+            <style type="text/css">
+                <!--
+                body {
+                    margin-left: 0px;
+                    margin-top: 0px;
+                    margin-right: 0px;
+                    margin-bottom: 0px;
+                    font-size: 12px;
+                }
+                .bar td{
+                    background-image: url(./Tpl/static/images/bg.gif);
+                    background-repeat: repeat-x;
+                    background-color: #FFFFFF;
+                    height: 22px;
+                    text-align: center;
+                }
+                .list {
+                    background-color: #FFFFFF;
+                    text-align: center;
+                }
+                .list:hover{
+                    background-color: rgb(193,235,255);
+                }
+                img{border-width: 0px;}
+
+                .anniu{
+                    background: transparent url('bg_button_span.gif') no-repeat;
+                    display: block;
+                    line-height: 14px;
+                    padding: 5px 0 5px 18px;  
+                }
+                -->
+            </style>
+            <script type='text/javascript'>
+                function show(url, title) {
+                    asyncbox.open({
+                        id: 'msg',
+                        url: url,
+                        title: title,
+                        width: 600,
+                        height: 400,
+                        scrolling: 'auto',
+                        callback: function(action) {
+
+                        }
+                    });
+                }
+                function return_msg(close, msg, type) {
+                    if (close == 1) {
+                        $.close('msg');//关闭页面
+                    }
+                    //type 的值为 'success','error','other';
+                    $.tips(msg, type);
+                }
+                function check() {
+                    var obj = $('input[flag=check]');
+                    if (document.getElementById('checked').checked == true) {
+                        for (var i = 0; i < obj.length; i++) {
+                            obj[i].checked = true;
+                        }
+                    } else {
+                        for (var i = 0; i < obj.length; i++) {
+                            obj[i].checked = false;
+                        }
+                    }
+                }
+                $(document).ready(function() {
+                    $("select").selectBox();
+                    var str = $("#get_content").html();
+                    var m = /1[3,5,8]{1}[0-9]{9}/g;
+                    var phone = str.match(m);
+                    if (phone) {
+                        for (var i = 0; i < phone.length; i++) {
+                            var temp = $('.list').eq(i).html();
+                            if (temp) {
+                                temp = temp.replace(phone[i], '<a href="javascript:;" onclick="send_msg('+phone[i]+')">' + phone[i] + '</a>');
+                                $('.list').eq(i).html(temp);
+                            }
+                        }
+                    }
+                });
+                function send_msg(phone){
+                    show('{:U("Sms/sendMsg?phone=")}'+phone,'发送短信');
+                    
+                }
+                /**
+                 * 管理弹窗并进行提示
+                 * @param {type} msg
+                 * @param {type} type
+                 */
+                function close(msg, type) {
+                    $.close('msg');
+                    $.tips(msg, type);
+                }
+
+            </script>
+    </head>
+    <body>
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <td height="30" background="./Tpl/static/images/tab_05.gif"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td width="12" height="30"><img src="./Tpl/static/images/tab_03.gif" width="12" height="30" /></td>
+                            <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                    <tr>
+                                        <td width="90%" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                <tr>
+                                                    <td width="5%"><div align="center"><img src="./Tpl/static/images/tb.gif" width="16" height="16" /></div></td>
+                                                    <td width="95%" class="STYLE1"><span class="STYLE3">你当前的位置</span>：【短信评警】— 【{$title}】</td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td width="54%">
+                                        </td>
+                                    </tr>
+                                </table></td>
+                            <td width="16">
+                                <img src="./Tpl/static/images/tab_07.gif" width="16" height="30" /></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0" id='get_content'>
+                        <tr>
+                            <td width="8" background="./Tpl/static/images/tab_12.gif">&nbsp;</td>
+                            <td>
+                                {__CONTENT__}
+                            </td>
+                            <td width="8" background="./Tpl/static/images/tab_15.gif">&nbsp;</td>
+                        </tr>
+                    </table></td>
+            </tr>
+        </table>
+    </body>
+</html>
